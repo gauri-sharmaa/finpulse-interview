@@ -8,33 +8,46 @@ export class ApiError extends Error {
   }
 }
 
+async function readError(res) {
+  let detail = res.statusText;
+  try {
+    const body = await res.json();
+    detail = body.detail ?? detail;
+    if (Array.isArray(detail)) {
+      detail = detail.map((d) => d.msg || JSON.stringify(d)).join("; ");
+    }
+  } catch {
+    /* non-JSON error body; keep the status text */
+  }
+  return detail;
+}
+
 export async function apiGet(path, params) {
   const qs = params ? `?${new URLSearchParams(params)}` : "";
   const res = await fetch(`/api${path}${qs}`);
 
   if (!res.ok) {
-    let detail = res.statusText;
-    try {
-      detail = (await res.json()).detail ?? detail;
-    } catch {
-      /* non-JSON error body; keep the status text */
-    }
-    throw new ApiError(detail, res.status);
+    throw new ApiError(await readError(res), res.status);
   }
   return res.json();
 }
 
-export const formatCurrency = (n, { compact = false } = {}) =>
+export async function apiPost(path, body) {
+  const res = await fetch(`/api${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    throw new ApiError(await readError(res), res.status);
+  }
+  return res.json();
+}
+
+export const formatCurrency = (n) =>
   new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
-    notation: compact ? "compact" : "standard",
-    maximumFractionDigits: compact ? 1 : 2,
+    maximumFractionDigits: 2,
   }).format(n);
-
-/** '2026-08' -> 'Aug 2026' */
-export const formatMonth = (month, { short = false } = {}) => {
-  const [y, m] = month.split("-");
-  const label = new Date(Number(y), Number(m) - 1, 1).toLocaleString("en-US", { month: "short" });
-  return short ? label : `${label} ${y}`;
-};

@@ -2176,5 +2176,14 @@
     "amount": -166.92,
     "account_id": "acc_checking",
     "type": "expense"
+  },
+  {
+    "id": "txn_0243",
+    "date": "2026-09-16",
+    "description": "Electricity",
+    "category": "Utilities",
+    "amount": -145.0,
+    "account_id": "acc_checking",
+    "type": "expense"
   }
 ]

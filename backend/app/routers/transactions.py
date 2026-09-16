@@ -1,7 +1,7 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, status
 
-from ..models import Transaction
-from ..store import get_transactions, month_of
+from ..models import Transaction, TransactionCreate
+from ..store import add_transaction, get_transactions, month_of
 
 router = APIRouter(prefix="/api/transactions", tags=["transactions"])
 
@@ -18,6 +18,14 @@ def list_transactions(
     if category:
         rows = [t for t in rows if t.category == category]
     return sorted(rows, key=lambda t: t.date, reverse=True)[:limit]
+
+
+@router.post("", response_model=Transaction, status_code=status.HTTP_201_CREATED)
+def create_transaction(payload: TransactionCreate):
+    try:
+        return add_transaction(payload)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
 @router.get("/{transaction_id}", response_model=Transaction)

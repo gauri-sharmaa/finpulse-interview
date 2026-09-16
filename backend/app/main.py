@@ -1,11 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from .routers import accounts, analytics, transactions
+from .routers import accounts, transactions
 
 app = FastAPI(
     title="FinPulse API",
-    description="Mock personal-finance backend for the FinPulse take-home.",
+    description="Mock personal-finance backend for FinPulse.",
     version="0.1.0",
 )
 
@@ -18,7 +18,6 @@ app.add_middleware(
 
 app.include_router(transactions.router)
 app.include_router(accounts.router)
-app.include_router(analytics.router)
 
 
 @app.get("/api/health")

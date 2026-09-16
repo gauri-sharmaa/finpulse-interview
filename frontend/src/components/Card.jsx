@@ -25,7 +25,3 @@ export const ErrorState = ({ error, onRetry }) => (
     {onRetry && <button onClick={onRetry}>Retry</button>}
   </div>
 );
-
-export const EmptyState = ({ message = "No data for this period." }) => (
-  <div className="state">{message}</div>
-);

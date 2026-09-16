@@ -8,7 +8,7 @@ import { apiGet } from "../api/client";
  * `params` is serialized into the dependency key, so passing an object literal
  * inline is safe — it will not cause a render loop.
  *
- *   const { data, loading, error } = useFetch("/analytics/summary", { month });
+ *   const { data, loading, error } = useFetch("/accounts");
  *
  * Pass a null/undefined `path` to hold off until a dependency is ready; the
  * hook stays in its loading state and issues no request.

@@ -1,7 +1,6 @@
 """Regenerates the mock dataset in backend/data/.
 
-Deterministic (fixed seed) so every candidate sees identical numbers and the
-tests in backend/tests/ stay stable. Run from the backend/ directory:
+Deterministic (fixed seed) so the numbers stay identical. Run from backend/:
 
     python scripts/generate_data.py
 """

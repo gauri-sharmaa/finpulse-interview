@@ -4,7 +4,7 @@ export function TransactionList({ transactions }) {
   if (!transactions.length) return <div className="state">No transactions.</div>;
 
   return (
-    <table>
+    <table className="tx-table">
       <thead>
         <tr>
           <th>Date</th>
@@ -16,10 +16,10 @@ export function TransactionList({ transactions }) {
       <tbody>
         {transactions.map((t) => (
           <tr key={t.id}>
-            <td style={{ color: "var(--text-secondary)", whiteSpace: "nowrap" }}>{t.date}</td>
+            <td className="tx-date">{t.date}</td>
             <td>{t.description}</td>
-            <td style={{ color: "var(--text-secondary)" }}>{t.category}</td>
-            <td className="num" style={{ color: t.amount > 0 ? "var(--good)" : undefined }}>
+            <td className="tx-cat">{t.category}</td>
+            <td className={`num${t.amount < 0 ? " amount-expense" : ""}`}>
               {formatCurrency(t.amount)}
             </td>
           </tr>

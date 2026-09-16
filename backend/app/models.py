@@ -1,6 +1,7 @@
-from typing import Literal, Optional
+from datetime import date as date_cls
+from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 
 class Transaction(BaseModel):
@@ -13,6 +14,29 @@ class Transaction(BaseModel):
     type: Literal["expense", "income"]
 
 
+class TransactionCreate(BaseModel):
+    date: str
+    description: str = Field(min_length=1)
+    category: str = Field(min_length=1)
+    amount: float = Field(gt=0)
+    account_id: str
+    type: Literal["expense", "income"]
+
+    @field_validator("date")
+    @classmethod
+    def valid_iso_date(cls, value: str) -> str:
+        date_cls.fromisoformat(value)
+        return value
+
+    @field_validator("description")
+    @classmethod
+    def non_blank_description(cls, value: str) -> str:
+        stripped = value.strip()
+        if not stripped:
+            raise ValueError("description cannot be blank")
+        return stripped
+
+
 class Account(BaseModel):
     id: str
     name: str
@@ -23,28 +47,3 @@ class Account(BaseModel):
 class Budget(BaseModel):
     category: str
     monthly_limit: float
-
-
-class MonthlySummary(BaseModel):
-    month: str = Field(description="YYYY-MM")
-    income: float
-    expenses: float = Field(description="Positive magnitude of money spent")
-    net: float
-
-
-class CategorySpend(BaseModel):
-    """One row of the spending-by-category breakdown."""
-
-    category: str
-    amount: float = Field(description="Positive magnitude spent in this category")
-    percentage: float = Field(description="Share of the month's total spend, 0-100")
-    transaction_count: int
-    budget_limit: Optional[float] = Field(
-        default=None, description="Monthly budget for this category, if one is set"
-    )
-
-
-class SpendingByCategoryResponse(BaseModel):
-    month: str
-    total_spend: float
-    categories: list[CategorySpend]
