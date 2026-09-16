@@ -1,0 +1,17 @@
+import { Navigate, Route, Routes } from "react-router-dom";
+
+import { Layout } from "./components/Layout";
+import { Analytics } from "./pages/Analytics";
+import { Dashboard } from "./pages/Dashboard";
+
+export default function App() {
+  return (
+    <Routes>
+      <Route element={<Layout />}>
+        <Route index element={<Dashboard />} />
+        <Route path="analytics" element={<Analytics />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Route>
+    </Routes>
+  );
+}

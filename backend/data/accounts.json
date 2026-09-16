@@ -1,0 +1,26 @@
+[
+  {
+    "id": "acc_checking",
+    "name": "Everyday Checking",
+    "type": "checking",
+    "balance": 4812.55
+  },
+  {
+    "id": "acc_savings",
+    "name": "High-Yield Savings",
+    "type": "savings",
+    "balance": 18240.1
+  },
+  {
+    "id": "acc_credit",
+    "name": "Rewards Credit Card",
+    "type": "credit",
+    "balance": -1183.22
+  },
+  {
+    "id": "acc_brokerage",
+    "name": "Brokerage",
+    "type": "investment",
+    "balance": 26905.78
+  }
+]

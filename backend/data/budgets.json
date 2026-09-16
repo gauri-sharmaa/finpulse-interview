@@ -1,0 +1,38 @@
+[
+  {
+    "category": "Housing",
+    "monthly_limit": 1900.0
+  },
+  {
+    "category": "Groceries",
+    "monthly_limit": 650.0
+  },
+  {
+    "category": "Dining",
+    "monthly_limit": 400.0
+  },
+  {
+    "category": "Transport",
+    "monthly_limit": 300.0
+  },
+  {
+    "category": "Utilities",
+    "monthly_limit": 350.0
+  },
+  {
+    "category": "Shopping",
+    "monthly_limit": 500.0
+  },
+  {
+    "category": "Entertainment",
+    "monthly_limit": 200.0
+  },
+  {
+    "category": "Health",
+    "monthly_limit": 250.0
+  },
+  {
+    "category": "Subscriptions",
+    "monthly_limit": 75.0
+  }
+]
